@@ -1,0 +1,47 @@
+#include <bits/stdc++.h>
+using namespace std;
+int cnt=0,r=0;
+int visit[1005];
+void bfs(int sv,vector<int>v[],int n){
+    int i,temp;
+    queue<int>q;
+    visit[sv]=1;
+    q.push(sv);
+    while(!q.empty()){
+        temp=q.front();
+        q.pop();
+        cnt++;
+        if(cnt==n){
+            return;
+        }
+        for(i=0;i<v[temp].size();i++){
+            if(visit[v[temp][i]]==0){
+                q.push(v[temp][i]);
+                visit[v[temp][i]]=1;
+                r++;
+            }
+        }
+    }
+}
+int main(){
+    int i,n,m,a,b,t;
+    cin>>t;
+    while(t--){
+        cnt=0;
+        r=0;
+        vector<int>v[1005];
+        cin>>n>>m;
+        for(i=0;i<m;i++){
+            cin>>a>>b;
+            v[a].push_back(b);
+            v[b].push_back(a);
+        }
+        memset(visit,0,sizeof(visit));
+        for(i=1;i<=n;i++){
+            bfs(i,v,n);
+        }
+        cout<<r<<endl;
+    }
+    
+    return 0;
+}
