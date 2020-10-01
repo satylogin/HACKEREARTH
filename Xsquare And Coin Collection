@@ -1,0 +1,32 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+    int n,i,k,t;
+    cin>>t;
+    while(t--){
+        cin>>n>>k;
+        int a[n+1];
+        for(i=1;i<=n;i++){
+            cin>>a[i];
+        }
+        long int dp[n+1]={0};
+        dp[0]=0;
+        for(i=1;i<=n;i++){
+            if(a[i]<=k){
+                dp[i]=a[i]+dp[i-1];
+            }
+            else{
+                dp[i]=0;
+            }
+        }
+        long int maxx=0;
+        for(i=1;i<=n;i++){
+            if(dp[i]>maxx){
+                maxx=dp[i];
+            }
+        }
+        cout<<maxx<<endl;
+    }
+    return 0;
+}

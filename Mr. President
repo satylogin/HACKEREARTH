@@ -1,0 +1,72 @@
+#include<bits/stdc++.h>
+    using  namespace  std;
+ 
+    #define all(p) p.begin(), p.end()
+    #define mp make_pair
+    #define pb push_back
+    #define rep(i,a,b) for(int i=a;i<=b;i++)
+    #define ren(i,a,b) for(int i=a;i>=b;i--)
+    #define ff first
+    #define ss second
+    #define ll long long
+    #define llu unsigned long long
+    #define ld long double
+    #define vll vector<long long int>
+    #define vi vector<int>
+    #define pii pair <int, int>
+    #define pll pair <long long int, long long int>
+    #define vpii vector<pair<int,int> >
+    #define nl cout<<"\n"
+    #define sp cout<<" "
+    #define tr(container, it) for(__typeof(container.begin()) it = container.begin(); it != container.end(); it++)
+ 
+    const  int  INF = 0x7f7f7f7f;
+ 
+    vector <pair <ll,pll > > edges, mst_edges;
+    ll par[1000005];
+ 
+    ll fp(ll i)
+    {
+        if(par[i]!=i)
+            par[i] = fp(par[i]);
+        return par[i];
+    }
+ 
+    void dsu(ll a, ll b)
+    {
+        ll pa=fp(a), pb=fp(b);
+        if(pa==pb) return;
+        par[pa]=pb;
+    }
+ 
+    int main ()
+    {
+        ios_base::sync_with_stdio(false);
+        ll n,m,k;
+        cin>>n>>m>>k;
+        rep(i,1,n) par[i]=i;
+        rep(i,1,m)
+        {
+            ll x,y,w;
+            cin>>x>>y>>w;
+            edges.pb(mp(w,mp(x,y)));
+        }
+        sort(all(edges));
+ 
+        ll mst=0,f=n,ans=n-1,cnt=0;
+        for(int i=0; i<edges.size(); i++)
+        {
+            ll x=edges[i].ss.ff,y=edges[i].ss.ss;
+            if(fp(x)==fp(y)) continue;
+            dsu(x,y);
+            f--;cnt++;
+            mst += edges[i].ff;
+            if(mst+f-1 <= k ) ans=f-1;
+            if(cnt==(n-1)) break;
+        }
+ 
+        if((n-1) > k || cnt<(n-1)) {cout<<-1,nl; return 0;}
+ 
+        cout<<ans,nl;
+        return  0;
+    }
