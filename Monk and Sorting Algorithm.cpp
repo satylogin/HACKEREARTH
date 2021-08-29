@@ -55,6 +55,7 @@ void merge_sort(int l, int r)
 
 int main()
 {
+	ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL); 
 	ll n, i, x, y;
 	cin >> n;
 	x = 0;
